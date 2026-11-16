@@ -210,13 +210,16 @@ public enum BaziCalculator {
               utcCalendar.dateComponents(fields, from: utcDate) == components else {
             throw BaziError.invalidDate
         }
-        let calendar = gregorian(in: zone)
-        // Choose the earlier instant when a clock rollback repeats the entered time.
-        // Begin sufficiently early even when a zone's offset crosses the date line.
-        guard let date = calendar.nextDate(
-            after: utcDate.addingTimeInterval(-2 * 86_400),
-            matching: components, matchingPolicy: .strict, repeatedTimePolicy: .first
-        ), calendar.dateComponents(fields, from: date) == components else {
+        // The adjacent UTC days bracket the offsets that can apply to the birth time.
+        // Round-trip each candidate using the full offset, including historical seconds.
+        let offsets = Set([-86_400.0, 86_400.0].map { delta in
+            zone.secondsFromGMT(for: utcDate.addingTimeInterval(delta))
+        })
+        let candidates = offsets.compactMap { offset -> Date? in
+            let candidate = utcDate.addingTimeInterval(-Double(offset))
+            return zone.secondsFromGMT(for: candidate) == offset ? candidate : nil
+        }
+        guard let date = candidates.min() else {
             throw BaziError.unavailableCivilTime
         }
         return (date, zone)

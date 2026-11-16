@@ -1,0 +1,28 @@
+{
+  "name": "yili-desktop",
+  "productName": "易历",
+  "version": "0.2.0",
+  "description": "四柱八字与每日运势",
+  "private": true,
+  "main": "main.cjs",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "generate": "node scripts/generate-solar-terms.mjs",
+    "prestart": "npm run generate",
+    "start": "electron .",
+    "pretest": "npm run generate",
+    "test": "node --test \"tests/*.test.mjs\"",
+    "presmoke": "npm run generate",
+    "smoke": "node scripts/smoke.mjs",
+    "package:win": "npm run generate && node scripts/package-windows.mjs",
+    "package:win:x64": "npm run package:win -- x64",
+    "package:win:arm64": "npm run package:win -- arm64"
+  },
+  "devDependencies": {
+    "@electron/packager": "20.3.0",
+    "electron": "45.3.3",
+    "yazl": "3.3.1"
+  }
+}

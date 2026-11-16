@@ -2,3 +2,5 @@
 .swiftpm/
 dist/
 .DS_Store
+/Windows/node_modules/
+/Windows/core/solar-terms.mjs

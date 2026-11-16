@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>易历</title>
+    <link rel="stylesheet" href="./styles.css">
+    <script type="module" src="./app.mjs"></script>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="brand"><span class="seal" aria-hidden="true"><i></i><i></i><i></i></span><span>易历</span></div>
+        <nav aria-label="页面">
+            <button type="button" data-page="daily" aria-current="page"><span aria-hidden="true">☼</span>今日运势</button>
+            <button type="button" data-page="natal"><span aria-hidden="true">▦</span>生辰命盘</button>
+            <button type="button" data-page="methods"><span aria-hidden="true">▤</span>排盘说明</button>
+        </nav>
+        <div class="sidebar-bottom">
+            <p>出生资料仅保存在本机</p>
+            <button class="profile panel" type="button" id="profile-button" aria-label="编辑出生资料">
+                <span id="profile-title"></span><span class="pencil" aria-hidden="true">↗</span>
+                <span id="profile-stamp" class="stamp"></span>
+            </button>
+        </div>
+    </aside>
+    <main id="content">
+        <div class="page">
+            <header class="page-header">
+                <h1 id="page-title">今日运势</h1>
+                <div class="head-actions">
+                    <button class="outline" id="edit-birth" type="button">输入我的出生资料</button>
+                    <div id="day-control">
+                        <button class="outline" id="today" type="button" hidden>回到今天</button>
+                        <div class="date-details"><time id="today-date"></time><span id="weekday"></span></div>
+                        <div class="date-arrows" aria-label="切换日期">
+                            <button id="prev-day" type="button" aria-label="前一天" title="前一天">‹</button>
+                            <button id="next-day" type="button" aria-label="后一天" title="后一天">›</button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <section id="daily-page" aria-labelledby="page-title">
+                <article class="hero panel">
+                    <div class="hero-copy">
+                        <div class="badges"><span id="day-pillar"></span><span id="solar-term"></span></div>
+                        <div><h2 id="daily-headline"></h2><p id="daily-summary"></p></div>
+                        <p class="direction-prompt" id="trigram-prompt"></p>
+                    </div>
+                    <figure class="dial"><canvas id="bagua" aria-hidden="true"></canvas><figcaption id="trigram-label"></figcaption></figure>
+                </article>
+                <div class="guidance">
+                    <section class="panel"><h2>宜做</h2><ul id="favors"></ul></section>
+                    <section class="panel"><h2>可缓</h2><ul id="ease-back"></ul></section>
+                </div>
+                <h2 class="section-heading">生活指引</h2>
+                <div class="daily-notes" id="daily-notes"></div>
+                <p class="fine" id="basis"></p>
+            </section>
+
+            <section id="natal-page" aria-labelledby="page-title" hidden>
+                <p class="natal-stamp" id="natal-stamp"></p>
+                <div id="pillars"></div>
+                <h2 class="section-heading">五行分布</h2>
+                <div class="panel element-panel">
+                    <div id="element-meter" aria-hidden="true"></div>
+                    <div id="element-legend"></div>
+                    <p class="fine">按四柱天干及地支藏干加权展示</p>
+                </div>
+                <h2 class="section-heading">命理解读</h2>
+                <article class="panel natal-reading">
+                    <h3 id="natal-headline"></h3><p id="natal-summary"></p><div id="observations"></div>
+                </article>
+            </section>
+
+            <section id="methods-page" aria-labelledby="page-title" hidden>
+                <p class="method-intro">命理、宜忌与方位提示供日常反思与娱乐。</p>
+                <article class="panel method">
+                    <h2>四柱如何排出</h2>
+                    <p>输入 1901–2099 年的公历出生日期、钟表时间和出生时区。时区采用当地历史时差与夏令时，重复出现的时刻取第一次。</p>
+                    <p>年柱于立春换年，月柱于十二个「节」交节时切换。节气表依据 JPL DE440 星历预先计算，以 UT1 近似民用时间。输入时间按所填分钟的起点处理。</p>
+                    <p>日柱在出生地的民用午夜切换。子时从 23:00 开始，时干取当时所属民用日的日干。</p>
+                </article>
+                <article class="panel method"><h2>五行如何计数</h2><p id="natal-method"></p></article>
+                <article class="panel method">
+                    <h2>每日运势与风水提示</h2><p id="daily-method"></p>
+                    <p>日运日期按本机时区划分。今日显示当前节气，前后日期显示当地正午所在的节气。</p>
+                </article>
+                <article class="panel method">
+                    <h2>出生资料与离线使用</h2>
+                    <p>出生资料保存在本机。排盘和日运可离线使用。清除本机出生资料后，即可回到体验命盘。</p>
+                </article>
+                <h2 class="section-heading">参考资料</h2>
+                <ul class="references">
+                    <li><a target="_blank" rel="noopener" href="https://www.hko.gov.hk/tc/gts/time/stemsandbranches.htm">香港天文台 · 天干和地支 ↗</a></li>
+                    <li><a target="_blank" rel="noopener" href="https://www.hko.gov.hk/tc/gts/time/24solarterms.htm">香港天文台 · 二十四节气 ↗</a></li>
+                    <li><a target="_blank" rel="noopener" href="https://ssd.jpl.nasa.gov/doc/de440_de441.html">NASA JPL · DE440 星历 ↗</a></li>
+                    <li><a target="_blank" rel="noopener" href="https://zh.wikisource.org/wiki/周易正義/09.05">《周易正义·说卦》 ↗</a></li>
+                    <li><a target="_blank" rel="noopener" href="https://www.chinese-classics.org/read/shushu/mingli/yuan-hai-zi-ping/001">《渊海子平》卷一 ↗</a></li>
+                </ul>
+            </section>
+        </div>
+    </main>
+    <dialog id="birth-dialog" aria-labelledby="birth-heading">
+        <form id="birth-form" novalidate>
+            <h2 id="birth-heading">出生资料</h2>
+            <p class="birth-intro">填写出生地当时的钟表时间。</p>
+            <fieldset>
+                <legend>公历出生日期 <small>1901–2099 年</small></legend>
+                <div class="fields">
+                    <label><input name="year" maxlength="4" type="text" inputmode="numeric" placeholder="YYYY" aria-label="年" autofocus><span>年</span></label>
+                    <label><input name="month" maxlength="2" type="text" inputmode="numeric" placeholder="MM" aria-label="月"><span>月</span></label>
+                    <label><input name="day" maxlength="2" type="text" inputmode="numeric" placeholder="DD" aria-label="日"><span>日</span></label>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>出生时间 <small>24 小时制</small></legend>
+                <div class="fields">
+                    <label><input name="hour" maxlength="2" type="text" inputmode="numeric" placeholder="HH" aria-label="时"><span>时</span></label>
+                    <label><input name="minute" maxlength="2" type="text" inputmode="numeric" placeholder="MM" aria-label="分"><span>分</span></label>
+                </div>
+            </fieldset>
+            <div class="zone-field">
+                <label for="zone-search">出生时区</label>
+                <input id="zone-search" placeholder="搜索城市或时区" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="zone-options">
+                <div id="zone-options" role="listbox" aria-label="匹配的时区" hidden></div>
+            </div>
+            <p id="birth-error" role="alert" hidden></p>
+            <div class="dialog-actions">
+                <span class="fine" id="local-label">仅保存在本机</span>
+                <button type="button" class="quiet-button" id="clear-birth" hidden>清除出生资料</button>
+                <div class="dialog-end">
+                    <button type="button" class="outline" id="cancel-birth">取消</button>
+                    <button type="submit" class="solid" id="save-birth">保存并排盘</button>
+                </div>
+            </div>
+        </form>
+    </dialog>
+</body>
+</html>

@@ -85,6 +85,14 @@ struct BaziTests {
         #expect(local.month == early.month)
     }
 
+    @Test func birthTimePreservesHistoricalOffsetSeconds() throws {
+        // Kathmandu was UTC+05:41:16. 17:21 there was 7 seconds before 立春.
+        let before = try BaziCalculator.chart(for: birth(1901, 2, 4, 17, 21, zone: "Asia/Kathmandu"))
+        let after = try BaziCalculator.chart(for: birth(1901, 2, 4, 17, 22, zone: "Asia/Kathmandu"))
+        #expect(before.year.text == "庚子")
+        #expect(after.year.text == "辛丑")
+    }
+
     @Test func solarTermLookupIncludesTheNextYearsFirstTerm() throws {
         let instant = try #require(ISO8601DateFormatter().date(from: "2024-12-31T20:00:00Z"))
         let terms = try #require(BaziCalculator.solarTerms(around: instant))
