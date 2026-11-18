@@ -39,6 +39,13 @@ npm --prefix Windows start
 
 运行 `npm --prefix Windows test` 检查排盘和解读，运行 `npm --prefix Windows run package:win` 将两种 Windows 架构的便携包输出到 `dist/Windows/`。
 
+只需一种架构时，可从仓库根目录运行对应的打包命令。生成的 ZIP 同样位于 `dist/Windows/`。
+
+| 目标架构 | 命令 |
+| --- | --- |
+| x64 | `npm --prefix Windows run package:win:x64` |
+| ARM64 | `npm --prefix Windows run package:win:arm64` |
+
 ## 使用口径
 
 - 出生日期采用公历，支持 1901–2099 年。按所选出生时区解释当时的钟表时间，采用该时区的历史时差和夏令时规则。遇到跳过的时刻需重新输入，遇到重复的时刻取第一次。排盘采用民用时间。
