@@ -7,11 +7,13 @@ on:
     paths:
       - Windows/**
       - Sources/YiLiCore/SolarTermTable.swift
+      - Sources/YiLiCore/Resources/fortune-contract.json
       - .github/workflows/windows.yml
   pull_request:
     paths:
       - Windows/**
       - Sources/YiLiCore/SolarTermTable.swift
+      - Sources/YiLiCore/Resources/fortune-contract.json
       - .github/workflows/windows.yml
 
 permissions:

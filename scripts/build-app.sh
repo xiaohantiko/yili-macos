@@ -16,6 +16,7 @@ app="$stage/易历.app"
 mkdir -p "$app/Contents/MacOS" "$app/Contents/Resources" "$stage/AppIcon.iconset"
 install -m 755 "$bin_dir/YiLiMac" "$app/Contents/MacOS/YiLiMac"
 install -m 644 "$root/scripts/Info.plist" "$app/Contents/Info.plist"
+install -m 644 "$root/Sources/YiLiCore/Resources/fortune-contract.json" "$app/Contents/Resources/fortune-contract.json"
 swift "$root/scripts/make-icon.swift" "$stage/AppIcon.iconset"
 iconutil --convert icns --output "$app/Contents/Resources/AppIcon.icns" "$stage/AppIcon.iconset"
 

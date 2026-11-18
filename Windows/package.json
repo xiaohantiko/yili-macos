@@ -1,7 +1,7 @@
 {
   "name": "yili-desktop",
   "productName": "易历",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "四柱八字与每日运势",
   "private": true,
   "main": "main.cjs",

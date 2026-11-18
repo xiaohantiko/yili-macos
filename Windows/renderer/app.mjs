@@ -1,6 +1,8 @@
 import { chartFor, dayPillarFor, solarTermsAround } from './core/bazi.mjs';
 import { dailyFor, natalFor, natalMethod, dailyMethod } from './core/interpretation.mjs';
 import { drawBagua } from './bagua.mjs';
+import { buildGPTContext } from './gpt-context.mjs';
+import { createGPTPanel } from './gpt.mjs';
 
 const sample = { year: 1990, month: 5, day: 17, hour: 10, minute: 30, timeZoneID: 'Asia/Shanghai' };
 const storageKey = 'localBirthProfile.v1';
@@ -28,6 +30,7 @@ const zoneOptions = get('zone-options');
 const dialog = get('birth-dialog');
 const form = get('birth-form');
 const navigation = [...document.querySelectorAll('[data-page]')];
+const gpt = createGPTPanel();
 
 function node(tag, text = '', classes = '') {
     const element = document.createElement(tag);
@@ -82,6 +85,7 @@ function renderDaily() {
     lastDailyState = state;
 
     const reading = dailyFor(profile.chart, dayPillarFor(date, timeZone));
+    gpt.setContext(buildGPTContext({ chart: profile.chart, date, timeZone, solarTerm: term }));
     const { trigram } = reading;
     write('page-title', isToday ? '今日运势' : '每日运势');
     show('today', !isToday);
@@ -252,6 +256,7 @@ function saveProfile(event) {
         return;
     }
     profile = { birth, chart, isSample: false };
+    gpt.setContext(null);
     dialog.close();
     renderProfile();
     selectPage('natal');
@@ -272,6 +277,7 @@ get('clear-birth').addEventListener('click', () => {
         return;
     }
     profile = initialProfile();
+    gpt.setContext(null);
     dialog.close();
     renderProfile();
     selectPage(page);

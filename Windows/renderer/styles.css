@@ -91,6 +91,25 @@ h1 { font-size: 43px; letter-spacing: .055em; white-space: nowrap; }
 .daily-notes h3 { font-size: 14px; margin-bottom: 5px; }
 .daily-notes p { color: var(--muted); font-size: 13px; }
 #basis { margin-top: 14px; }
+.gpt-panel { margin-top: 17px; padding: 18px; }
+.gpt-heading { display: flex; justify-content: space-between; align-items: start; gap: 12px; }
+.gpt-heading h2 { font: 600 25px var(--serif); margin-bottom: 4px; }
+.gpt-notice { margin-top: 11px; color: var(--muted); font-size: 12px; }
+.gpt-facts { margin-top: 10px; font-size: 12px; color: var(--muted); }
+.gpt-facts summary { cursor: pointer; color: var(--gold-light); width: fit-content; }
+.gpt-facts dl { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 7px 15px; margin: 12px 0; }
+.gpt-facts dt { color: var(--quiet); }
+.gpt-facts dd { margin: 0; overflow-wrap: anywhere; }
+.gpt-actions { display: flex; flex-wrap: wrap; gap: 9px; align-items: center; margin-top: 14px; }
+.gpt-actions .fine { margin-left: auto; }
+.gpt-status { color: var(--muted); font-size: 13px; margin-top: 10px; }
+.gpt-status:empty { display: none; }
+.gpt-result { margin-top: 15px; border-top: 1px solid var(--line); padding-top: 15px; display: grid; gap: 17px; }
+.gpt-result h3 { font-size: 14px; color: var(--gold-light); margin-bottom: 6px; }
+.gpt-result p { white-space: pre-wrap; overflow-wrap: anywhere; color: var(--muted); line-height: 1.85; }
+.gpt-boundary { margin-top: 12px; }
+.error { color: var(--fire); }
+button:disabled { opacity: .5; cursor: default; }
 
 .natal-stamp { color: var(--gold-light); font-size: 13px; margin-bottom: 14px; }
 #pillars { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 11px; }
@@ -129,6 +148,13 @@ h1 { font-size: 43px; letter-spacing: .055em; white-space: nowrap; }
 
 #birth-dialog { width: min(480px, calc(100% - 34px)); max-height: calc(100% - 34px); border: 1px solid var(--gold-line); border-radius: 13px; background: var(--bg); color: var(--text); padding: 24px; }
 #birth-dialog::backdrop { background: #090b09b9; }
+#gpt-settings { width: min(480px, calc(100% - 34px)); max-height: calc(100% - 34px); border: 1px solid var(--gold-line); border-radius: 13px; background: var(--bg); color: var(--text); padding: 24px; }
+#gpt-settings::backdrop { background: #090b09b9; }
+#gpt-settings-heading { font: 600 29px var(--serif); }
+.gpt-settings-intro { margin: 8px 0 17px; color: var(--muted); }
+#gpt-settings-form > label { display: block; margin-bottom: 7px; font-size: 13px; }
+#gpt-settings-form > .fine { margin-top: 9px; }
+#gpt-key-error { margin-top: 10px; font-size: 13px; }
 #birth-heading { font-size: 31px; }
 .birth-intro { color: var(--muted); margin: 6px 0 18px; padding-bottom: 13px; border-bottom: 1px solid var(--line); }
 fieldset { min-width: 0; border: 0; margin: 0 0 14px; padding: 0; }

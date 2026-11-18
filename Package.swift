@@ -9,7 +9,7 @@ let package = Package(
         .executable(name: "YiLiMac", targets: ["YiLiMac"]),
     ],
     targets: [
-        .target(name: "YiLiCore"),
+        .target(name: "YiLiCore", resources: [.process("Resources")]),
         .executableTarget(name: "YiLiMac", dependencies: ["YiLiCore"]),
         .testTarget(name: "YiLiCoreTests", dependencies: ["YiLiCore"]),
     ]

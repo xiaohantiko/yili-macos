@@ -49,6 +49,25 @@
                     </div>
                     <figure class="dial"><canvas id="bagua" aria-hidden="true"></canvas><figcaption id="trigram-label"></figcaption></figure>
                 </article>
+                <section class="panel gpt-panel" id="gpt-panel" aria-labelledby="gpt-heading" aria-busy="false">
+                    <div class="gpt-heading">
+                        <div><h2 id="gpt-heading">GPT 详细解读</h2><p class="fine" id="gpt-key-state"></p></div>
+                        <button class="outline" id="gpt-open-settings" type="button">API Key 设置</button>
+                    </div>
+                    <p class="gpt-notice">点击生成后，将下列排盘结果、所选日期和日运时区发送至 OpenAI。出生原始年月日、时分保留在本机。调用费用计入你的 OpenAI API 账户。</p>
+                    <details class="gpt-facts">
+                        <summary>查看发送的排盘依据</summary>
+                        <dl id="gpt-context"></dl>
+                    </details>
+                    <div class="gpt-actions">
+                        <button class="solid" id="gpt-generate" type="button" disabled>生成所选日期解读</button>
+                        <button class="outline" id="gpt-cancel" type="button" hidden>取消生成</button>
+                        <span class="fine" id="gpt-model">gpt-5.4-mini</span>
+                    </div>
+                    <p class="gpt-status" id="gpt-status" role="status" aria-live="polite"></p>
+                    <div class="gpt-result" id="gpt-result" hidden></div>
+                    <p class="fine gpt-boundary">根据传统文化象意展开，供日常反思与娱乐。</p>
+                </section>
                 <div class="guidance">
                     <section class="panel"><h2>宜做</h2><ul id="favors"></ul></section>
                     <section class="panel"><h2>可缓</h2><ul id="ease-back"></ul></section>
@@ -80,6 +99,7 @@
                     <p>输入 1901–2099 年的公历出生日期、钟表时间和出生时区。时区采用当地历史时差与夏令时，重复出现的时刻取第一次。</p>
                     <p>年柱于立春换年，月柱于十二个「节」交节时切换。节气表依据 JPL DE440 星历预先计算，以 UT1 近似民用时间。输入时间按所填分钟的起点处理。</p>
                     <p>日柱在出生地的民用午夜切换。子时从 23:00 开始，时干取当时所属民用日的日干。</p>
+                    <p>以香港天文台《2024 年年历》核对立春和十二中气，13 个样本的交节时刻与年历所列分钟相差均在 30 秒以内。</p>
                 </article>
                 <article class="panel method"><h2>五行如何计数</h2><p id="natal-method"></p></article>
                 <article class="panel method">
@@ -88,12 +108,14 @@
                 </article>
                 <article class="panel method">
                     <h2>出生资料与离线使用</h2>
-                    <p>出生资料保存在本机。排盘和日运可离线使用。清除本机出生资料后，即可回到体验命盘。</p>
+                    <p>出生资料保存在本机。排盘和基础日运可离线使用。清除本机出生资料后，即可回到体验命盘。</p>
+                    <p>GPT 详细解读由你点击生成。应用将所选日期、日运时区、四柱、五行、流日、节气与本地推演依据发送至 OpenAI，生成更详细的传统文化解读。原始出生年月日、时分保留在本机。API Key 仅保存于本次应用运行期间，可随时替换或清除。</p>
                 </article>
                 <h2 class="section-heading">参考资料</h2>
                 <ul class="references">
                     <li><a target="_blank" rel="noopener" href="https://www.hko.gov.hk/tc/gts/time/stemsandbranches.htm">香港天文台 · 天干和地支 ↗</a></li>
                     <li><a target="_blank" rel="noopener" href="https://www.hko.gov.hk/tc/gts/time/24solarterms.htm">香港天文台 · 二十四节气 ↗</a></li>
+                    <li><a target="_blank" rel="noopener" href="https://www.hko.gov.hk/tc/gts/astron2024/files/HKO_almanac_2024.pdf">香港天文台 · 2024 年年历 ↗</a></li>
                     <li><a target="_blank" rel="noopener" href="https://ssd.jpl.nasa.gov/doc/de440_de441.html">NASA JPL · DE440 星历 ↗</a></li>
                     <li><a target="_blank" rel="noopener" href="https://zh.wikisource.org/wiki/周易正義/09.05">《周易正义·说卦》 ↗</a></li>
                     <li><a target="_blank" rel="noopener" href="https://www.chinese-classics.org/read/shushu/mingli/yuan-hai-zi-ping/001">《渊海子平》卷一 ↗</a></li>
@@ -101,6 +123,23 @@
             </section>
         </div>
     </main>
+    <dialog id="gpt-settings" aria-labelledby="gpt-settings-heading">
+        <form id="gpt-settings-form" novalidate>
+            <h2 id="gpt-settings-heading">OpenAI API Key</h2>
+            <p class="gpt-settings-intro" id="gpt-key-status"></p>
+            <label for="gpt-key">API Key</label>
+            <input id="gpt-key" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="512" placeholder="输入你的 OpenAI API Key" aria-describedby="gpt-key-status">
+            <p class="fine">生成调用使用你自己的 OpenAI API 额度。</p>
+            <p id="gpt-key-error" class="error" role="alert" hidden></p>
+            <div class="dialog-actions">
+                <button class="quiet-button" id="gpt-clear-key" type="button" hidden>清除本次密钥</button>
+                <div class="dialog-end">
+                    <button class="outline" id="gpt-close-settings" type="button">取消</button>
+                    <button class="solid" id="gpt-save-key" type="submit">保存本次密钥</button>
+                </div>
+            </div>
+        </form>
+    </dialog>
     <dialog id="birth-dialog" aria-labelledby="birth-heading">
         <form id="birth-form" novalidate>
             <h2 id="birth-heading">出生资料</h2>

@@ -11,7 +11,7 @@ const output = fileURLToPath(new URL('../../dist/Windows/', import.meta.url));
 const manifest = JSON.parse(await readFile(join(project, 'package.json'), 'utf8'));
 const supported = ['x64', 'arm64'];
 const architectures = process.argv.length > 2 ? process.argv.slice(2) : supported;
-const runtimePaths = new Set(['package.json', 'main.cjs', 'smoke.cjs', 'assets', 'core', 'renderer']);
+const runtimePaths = new Set(['package.json', 'main.cjs', 'preload.cjs', 'openai.cjs', 'smoke.cjs', 'assets', 'core', 'renderer']);
 
 if (architectures.some((arch) => !supported.includes(arch))) {
   throw new Error('Windows architecture must be x64 or arm64.');

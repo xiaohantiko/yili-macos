@@ -1,4 +1,4 @@
-import { readFile, writeFile } from 'node:fs/promises';
+import { copyFile, readFile, writeFile } from 'node:fs/promises';
 
 const source = new URL('../../Sources/YiLiCore/SolarTermTable.swift', import.meta.url);
 const destination = new URL('../core/solar-terms.mjs', import.meta.url);
@@ -34,3 +34,7 @@ const data = [
   '',
 ].join('\n');
 await writeFile(destination, data);
+await copyFile(
+  new URL('../../Sources/YiLiCore/Resources/fortune-contract.json', import.meta.url),
+  new URL('../core/fortune-contract.json', import.meta.url),
+);

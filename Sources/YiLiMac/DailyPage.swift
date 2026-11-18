@@ -5,6 +5,7 @@ struct DailyPage: View {
     let profile: BirthProfile
     let date: Date
     let now: Date
+    let gpt: GPTSession
     let timeZone: TimeZone
     let isToday: Bool
     let move: (Int) -> Void
@@ -35,6 +36,11 @@ struct DailyPage: View {
             }
 
             dailyHero(reading, term: term)
+
+            GPTPanel(
+                facts: GPTFacts.make(chart: profile.chart, date: date, termDate: termDate, timeZone: timeZone),
+                session: gpt
+            )
 
             HStack(alignment: .top, spacing: 14) {
                 ActionCard(title: "宜做", icon: "arrow.up.right", items: reading.favors, color: Ink.goldLight)

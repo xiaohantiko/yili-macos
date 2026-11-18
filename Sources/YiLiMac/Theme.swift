@@ -177,7 +177,7 @@ struct Sidebar: View {
             HStack(spacing: 6) {
                 Image(systemName: "lock")
                     .font(.system(size: 10))
-                Text("出生资料仅保存在本机")
+                Text("GPT 生成时发送派生排盘数据")
                     .font(.system(size: 10))
             }
             .foregroundStyle(Ink.quiet)

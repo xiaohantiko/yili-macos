@@ -22,6 +22,7 @@ struct YiLiApp: App {
 struct AlmanacWindow: View {
     @Environment(\.scenePhase) private var scenePhase
     @StateProperty private var store = BirthStore()
+    @StateProperty private var gpt = GPTSession()
     @StateProperty private var page: AlmanacPage = .daily
     @StateProperty private var editing = false
     @StateProperty private var now = Date()
@@ -47,6 +48,7 @@ struct AlmanacWindow: View {
                         case .daily:
                             DailyPage(
                                 profile: profile, date: displayDate, now: now,
+                                gpt: gpt,
                                 timeZone: calendar.timeZone, isToday: showingToday,
                                 move: moveDay, returnToToday: { previewDate = nil },
                                 edit: { editing = true }
@@ -94,6 +96,7 @@ struct AlmanacWindow: View {
         .onChange(of: scenePhase) { _, phase in
             if phase == .active { now = Date() }
         }
+        .onChange(of: store.profile?.birth) { _, _ in gpt.invalidate() }
     }
 
     private func moveDay(_ direction: Int) {
