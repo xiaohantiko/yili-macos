@@ -4,12 +4,14 @@
 
 ## 下载和运行
 
-在 [GitHub Releases](https://github.com/xiaohantiko/yili-macos/releases) 下载对应的 ZIP，解压后打开应用。
+在 [最新发布页](https://github.com/xiaohantiko/yili-macos/releases/latest) 下载对应的 ZIP，解压后打开应用。
 
 | 系统 | 下载文件 | 打开方式 |
 | --- | --- | --- |
 | macOS 14 或更新版本，Apple 芯片 | `YiLi-版本-macOS-arm64.zip` | 打开 `易历.app` |
 | Windows 10 或更新版本，64 位 | `YiLi-版本-Windows-x64.zip` 或 `YiLi-版本-Windows-arm64.zip` | 解压整个 ZIP，打开 `YiLi/YiLi.exe` |
+
+Windows 用户可在「设置 → 系统 → 关于」的「系统类型」中查看处理器架构。基于 x64 的处理器选 `Windows-x64.zip`，基于 ARM 的处理器选 `Windows-arm64.zip`。
 
 初次打开会显示示例命盘，录入自己的出生资料后即可切换为个人结果。两端均可离线使用。
 
